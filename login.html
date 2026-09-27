@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login Form</title>
+  <!-- Font Awesome Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  
+  <style>
+    /* General Setup */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    body {
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 20px;
+      
+      /* Relative path matching background folder structure */
+      background-image: url('image/register/salonbackground.jpg');
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      background-attachment: fixed;
+    }
+
+    /* Glassmorphism Card Container */
+    .card-container {
+      width: 100%;
+      max-width: 400px;
+      padding: 40px 30px;
+      border-radius: 16px;
+      
+      /* Glassmorphism Styling */
+      background: rgba(255, 255, 255, 0.08);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border: 1px solid rgba(255, 255, 255, 0.18);
+      box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+      
+      text-align: center;
+      color: #ffffff;
+    }
+
+    /* Header */
+    .title {
+      font-size: 1.8rem;
+      font-weight: 600;
+      margin-bottom: 30px;
+      letter-spacing: 1px;
+    }
+
+    /* Form Layout */
+    .login-form {
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
+    }
+
+    /* Input Fields with Underline and Right Icons */
+    .input-group {
+      position: relative;
+      display: flex;
+      align-items: center;
+    }
+
+    .input-group input[type="text"],
+    .input-group input[type="password"] {
+      width: 100%;
+      padding: 10px 35px 10px 5px;
+      background: transparent;
+      border: none;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.4);
+      outline: none;
+      color: #ffffff;
+      font-size: 0.95rem;
+      transition: border-color 0.3s ease;
+    }
+
+    .input-group input::placeholder {
+      color: rgba(255, 255, 255, 0.7);
+      font-size: 0.88rem;
+    }
+
+    .input-group input:focus {
+      border-bottom-color: #ffffff;
+    }
+
+    .input-group input:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+
+    /* Icon Placement (Right Aligned) */
+    .input-group .icon {
+      position: absolute;
+      right: 8px;
+      color: rgba(255, 255, 255, 0.8);
+      font-size: 0.9rem;
+      pointer-events: none;
+    }
+
+    /* Interactive Icon specifically for Password Toggle */
+    .input-group .toggle-password {
+      pointer-events: auto;
+      cursor: pointer;
+    }
+
+    /* Error Message Styling */
+    .error-message {
+      color: #ff6b6b;
+      font-size: 0.85rem;
+      display: none;
+      margin-top: -5px;
+      text-align: center;
+      font-weight: 500;
+    }
+
+    /* Options Row (Remember Me & Forgot Password) */
+    .options-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 0.82rem;
+      color: rgba(255, 255, 255, 0.9);
+      margin-top: 2px;
+    }
+
+    .remember-me {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      cursor: pointer;
+    }
+
+    .remember-me input {
+      accent-color: #ffffff;
+      cursor: pointer;
+    }
+
+    .forgot-pass {
+      color: #ffffff;
+      text-decoration: none;
+    }
+
+    .forgot-pass:hover {
+      text-decoration: underline;
+    }
+
+    /* Rounded White Button */
+    .submit-btn {
+      margin-top: 10px;
+      width: 100%;
+      padding: 12px;
+      border: none;
+      border-radius: 25px;
+      background-color: #ffffff;
+      color: #111827;
+      font-weight: 600;
+      font-size: 0.95rem;
+      cursor: pointer;
+      transition: background-color 0.2s ease, transform 0.1s ease;
+    }
+
+    .submit-btn:hover {
+      background-color: #f3f4f6;
+    }
+
+    .submit-btn:active {
+      transform: scale(0.98);
+    }
+
+    .submit-btn:disabled {
+      background-color: #aaaaaa;
+      color: #666666;
+      cursor: not-allowed;
+      transform: none;
+    }
+
+    /* Footer Register Link */
+    .register-text {
+      font-size: 0.8rem;
+      margin-top: 10px;
+      color: rgba(255, 255, 255, 0.8);
+    }
+
+    .register-text a {
+      color: #ffffff;
+      text-decoration: none;
+      font-weight: 600;
+    }
+
+    .register-text a:hover {
+      text-decoration: underline;
+    }
+
+    /* Mobile Responsive Rule */
+    @media (max-width: 480px) {
+      .card-container {
+        padding: 30px 20px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="card-container">
+    <h2 class="title">Login</h2>
+    
+    <form class="login-form" id="loginForm">
+      <!-- Username -->
+      <div class="input-group">
+        <input type="text" id="username" placeholder="Username" required>
+        <i class="fa-regular fa-user icon"></i>
+      </div>
+
+      <!-- Password with Eye Toggle -->
+      <div class="input-group">
+        <input type="password" id="password" placeholder="Password" required>
+        <i class="fa-solid fa-eye icon toggle-password" id="togglePassword"></i>
+      </div>
+
+      <!-- Error / Try Again Message -->
+      <div class="error-message" id="errorMessage"></div>
+
+      <!-- Remember Me & Forgot Password Row -->
+      <div class="options-row">
+        <label class="remember-me">
+          <input type="checkbox"> Remember me
+        </label>
+        <a href="#" class="forgot-pass">Forgot password?</a>
+      </div>
+
+      <!-- Submit Button -->
+      <button type="submit" class="submit-btn" id="submitBtn">Login</button>
+
+      <!-- Footer Link -->
+      <p class="register-text">
+        Don't have an account? <a href="register.html">Register</a>
+      </p>
+    </form>
+  </div>
+
+  <script>
+    let attemptsLeft = 3;
+
+    // Toggle Password Visibility
+    const togglePassword = document.getElementById('togglePassword');
+    const passwordField = document.getElementById('password');
+
+    togglePassword.addEventListener('click', function () {
+      // Toggle type attribute
+      const type = passwordField.getAttribute('type') === 'password' ? 'text' : 'password';
+      passwordField.setAttribute('type', type);
+      
+      // Toggle eye icon
+      this.classList.toggle('fa-eye');
+      this.classList.toggle('fa-eye-slash');
+    });
+
+    // Form Submit Handler
+    document.getElementById('loginForm').addEventListener('submit', function (event) {
+      event.preventDefault();
+
+      const usernameInput = document.getElementById('username').value.trim();
+      const passwordInput = document.getElementById('password').value.trim();
+      const errorMessage = document.getElementById('errorMessage');
+      const submitBtn = document.getElementById('submitBtn');
+      const usernameField = document.getElementById('username');
+
+      // Correct credentials check
+      if (usernameInput === 'zairah' && passwordInput === 'garcia') {
+        // Successful redirect to landingpage.html
+        window.location.href = 'landingpage.html';
+      } else {
+        attemptsLeft--;
+
+        if (attemptsLeft > 0) {
+          // Display warning and remaining attempts
+          errorMessage.textContent = `Incorrect credentials. Try again! (${attemptsLeft} attempt${attemptsLeft > 1 ? 's' : ''} left)`;
+          errorMessage.style.display = 'block';
+        } else {
+          // Lock out user after 3 failed attempts
+          errorMessage.textContent = 'Too many failed attempts. You are locked out!';
+          errorMessage.style.display = 'block';
+
+          usernameField.disabled = true;
+          passwordField.disabled = true;
+          submitBtn.disabled = true;
+        }
+      }
+    });
+  </script>
+
+</body>
+</html>
